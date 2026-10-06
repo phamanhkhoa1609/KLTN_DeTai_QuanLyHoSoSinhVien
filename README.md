@@ -41,6 +41,7 @@ Sinh viên xem và thao tác trên **hồ sơ của chính mình**, không quả
 - **Học bổng:** xem điều kiện / kết quả xét (nếu đủ điều kiện).
 - **Tin tức:** thông báo nhà trường (ảnh, video, file đính kèm).
 - **Yêu cầu tư vấn:** gửi câu hỏi tới giảng viên lớp học phần, theo dõi trả lời.
+- **AI ChatBot hỗ trợ tính điểm và tư vấn học tập.**
 - **Đổi mật khẩu.**
 
 **Cách demo nhanh:** đăng nhập `121220255` / `123456` → xem lịch và điểm → vào ĐKHP (khi đang có đợt) → mở tin tức / công nợ / tư vấn.
