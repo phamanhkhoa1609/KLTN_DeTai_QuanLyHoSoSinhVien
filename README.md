@@ -1,159 +1,126 @@
-# Quản lý hồ sơ sinh viên
+# Student Profile Management System
 
-Hệ thống web hỗ trợ nhà trường quản lý hồ sơ, đào tạo và học tập của sinh viên. Ứng dụng có **3 vai trò**: Quản trị, Giảng viên và Sinh viên — mỗi role một giao diện, quyền hạn và luồng nghiệp vụ riêng.
+A web-based system that helps universities manage student profiles, academic records, training activities, and student services. The application provides **3 roles** — Administrator, Lecturer, and Student — with separate interfaces, permissions, and business workflows.
 
 - **Frontend:** React (port `3000`)
 - **Backend:** Node.js + Express (port `8080`)
-- **CSDL:** MySQL 8
-- **Lưu file:** Amazon S3 (ảnh thẻ, tin tức, đính kèm)
+- **Database:** MySQL 8
+- **File Storage:** Amazon S3 (student photos, news media, attachments)
 
 ---
 
-## Tài khoản demo
+## Demo Accounts
 
-Đăng nhập tại trang `/login`. **Tên đăng nhập** là mã số (sinh viên / giảng viên) hoặc tài khoản quản trị.
+Log in at `/login`. The **username** is the student ID or lecturer ID.
 
-| Vai trò | Tên đăng nhập | Mật khẩu | Vào trang |
-|--------|----------------|----------|-----------|
-| **Sinh viên** | `121220255` | `123456` | `/student` |
-| **Giảng viên** | `1481312` | `123456` | `/teacher` |
-| **Quản trị** | `admin01` | `123456` | `/admin` |
+| Role | Username | Password | Page |
+|------|----------|----------|------|
+| **Student** | `121220255` | `123456` | `/student` |
+| **Lecturer** | `1481312` | `123456` | `/teacher` |
 
-Mật khẩu mặc định khi tạo tài khoản mới cũng là `123456`. Lần đăng nhập đầu có thể bắt buộc **đổi mật khẩu** trước khi vào hệ thống.
+> **Note:** The Administrator account is not provided as a demo account. Administrative access is restricted to authorized users.
 
----
-
-## Ba vai trò
-
-### 1. Sinh viên (`121220255`)
-
-Sinh viên xem và thao tác trên **hồ sơ của chính mình**, không quản lý người khác.
-
-**Chức năng chính**
-
-- **Tổng quan:** dashboard, thông tin cá nhân, ảnh thẻ.
-- **Lịch học / lịch thi:** thời khóa biểu theo lớp học phần đã đăng ký.
-- **Kết quả học tập:** điểm thành phần, điểm tổng kết, GPA.
-- **Chương trình khung:** lộ trình học phần theo ngành, tiến độ hoàn thành.
-- **Đăng ký học phần (ĐKHP):** đăng ký / hủy trong đợt mở; kiểm tra sĩ số, trùng lịch, học phần tiên quyết.
-- **Công nợ:** học phí, khoản phải nộp, trạng thái thanh toán.
-- **Điểm rèn luyện:** kết quả rèn luyện theo học kỳ.
-- **Học bổng:** xem điều kiện / kết quả xét (nếu đủ điều kiện).
-- **Tin tức:** thông báo nhà trường (ảnh, video, file đính kèm).
-- **Yêu cầu tư vấn:** gửi câu hỏi tới giảng viên lớp học phần, theo dõi trả lời.
-- **AI ChatBot hỗ trợ tính điểm và tư vấn học tập.**
-- **Đổi mật khẩu.**
-
-**Cách demo nhanh:** đăng nhập `121220255` / `123456` → xem lịch và điểm → vào ĐKHP (khi đang có đợt) → mở tin tức / công nợ / tư vấn.
+The default password for newly created accounts is `123456`. On the first login, users may be required to change their password before accessing the system.
 
 ---
 
-### 2. Giảng viên (`1481312`)
+## Three Roles
 
-Giảng viên phụ trách **lớp học phần được phân công**, không chỉnh danh mục khoa / ngành / học phí toàn trường.
+### 1. Student (`121220255`)
 
-**Chức năng chính**
+Students can view and manage **their own academic profile and information**. They cannot manage other users or system-wide data.
 
-- **Tổng quan:** thông tin giảng viên.
-- **Lớp học phần:** danh sách LHP đang dạy.
-- **Sinh viên trong lớp:** danh sách SV theo từng LHP.
-- **Lịch giảng dạy:** lịch theo ca, phòng, cơ sở.
-- **Nhập điểm:** nhập điểm quá trình / giữa kỳ / cuối kỳ trong đợt cho phép. Điểm đã lưu thường **không tự sửa**; cần quản trị nếu phải chỉnh.
-- **Tin tức:** xem thông báo gửi giảng viên.
-- **Yêu cầu tư vấn:** nhận, trả lời, đổi trạng thái yêu cầu từ sinh viên.
-- **Đổi mật khẩu.**
+**Main Features**
 
-**Cách demo nhanh:** đăng nhập `1481312` / `123456` → mở lớp học phần → nhập điểm (nếu đang mở đợt) → xem lịch dạy → trả lời tư vấn.
+- **Dashboard:** overview, personal information, student photo.
+- **Class Schedule / Exam Schedule:** timetable based on registered course sections.
+- **Academic Results:** component scores, final grades, and GPA.
+- **Curriculum:** course roadmap based on the student's major and study progress.
+- **Course Registration:** register for / cancel courses during an open registration period; check class capacity, schedule conflicts, and prerequisite requirements.
+- **Financial Status:** tuition fees, outstanding payments, and payment status.
+- **Training Results:** view training and conduct results by semester.
+- **Scholarships:** view scholarship eligibility and results, if applicable.
+- **News:** university announcements, including images, videos, and file attachments.
+- **Academic Consultation:** send questions to lecturers of registered course sections and track responses.
+- **AI Chatbot:** assistance with grade calculation and academic consultation.
+- **Change Password.**
 
----
-
-### 3. Quản trị (`admin01`)
-
-Quản trị viên vận hành **toàn bộ hệ thống**: danh mục, người dùng, đào tạo, tài chính, xét duyệt.
-
-**Người dùng & hồ sơ**
-
-- Tài khoản: khóa / mở, phân quyền.
-- Sinh viên, giảng viên: thêm, sửa, xóa, import Excel, upload ảnh thẻ (S3).
-
-**Danh mục nhà trường**
-
-- Khoa, ngành, lớp hành chính.
-- Học phần, lớp học phần, phân công giảng viên.
-- Lịch học / buổi học, lịch nghỉ.
-
-**Đào tạo & đăng ký**
-
-- Đợt đăng ký học phần (mở / đóng).
-- Sửa điểm đã chốt (khi giảng viên không được sửa).
-- Import / quản lý điểm rèn luyện.
-- Import / quản lý chứng chỉ tiếng Anh.
-- Xét học bổng, xét tốt nghiệp.
-
-**Truyền thông & tài chính**
-
-- Tin tức / thông báo (ảnh, video, file).
-- Học phí, công nợ.
-- Theo dõi yêu cầu tư vấn toàn hệ thống.
-
-**Cách demo nhanh:** đăng nhập `admin01` / `123456` → thêm/sửa sinh viên → mở đợt ĐKHP → quản lý LHP & lịch → xem học phí / học bổng / tốt nghiệp.
+**Quick Demo:**  
+Log in with `121220255` / `123456` → view schedule and grades → open Course Registration (when registration is available) → view news / financial status / consultation requests.
 
 ---
 
-## Phân quyền tóm tắt
+### 2. Lecturer (`1481312`)
 
-| Việc | Sinh viên | Giảng viên | Quản trị |
-|------|:---------:|:----------:|:--------:|
-| Xem hồ sơ / điểm / lịch của mình | Có | Có (lớp mình dạy) | Toàn hệ thống |
-| Đăng ký học phần | Có | — | Mở đợt, cấu hình |
-| Nhập điểm | — | Có (đợt mở) | Sửa điểm đã lưu |
-| Quản lý khoa, ngành, lớp, học phần | — | — | Có |
-| Học phí, học bổng, tốt nghiệp | Xem phần mình | — | Quản lý / xét |
-| Tư vấn | Gửi | Trả lời | Giám sát |
-| Tin tức | Đọc | Đọc | Đăng / sửa / xóa |
+Lecturers are responsible for the **course sections assigned to them**. They cannot manage university-wide departments, majors, tuition fees, or other system-wide configuration.
 
----
+**Main Features**
 
-## Chạy local
+- **Dashboard:** lecturer information.
+- **Course Sections:** list of assigned course sections.
+- **Students in Class:** view students enrolled in each course section.
+- **Teaching Schedule:** schedule by class period, room, and campus.
+- **Grade Management:** enter coursework, midterm, and final grades during the allowed grading period. Saved grades are normally not editable directly; administrative approval is required for corrections.
+- **News:** view announcements for lecturers.
+- **Academic Consultation:** receive and respond to student consultation requests and update their status.
+- **Change Password.**
 
-Cần **Node.js**, **MySQL 8**. Tạo database `quanlysinhvien` và import `backend/CSDL.sql` (hoặc dùng RDS đã nạp sẵn).
-
-**Backend** — file `backend/.env`:
-
-- `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_PORT`
-- `PORT=8080`, `CORS_ORIGIN=http://localhost:3000`
-- `JWT_SECRET`
-- `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `AWS_BUCKET_NAME` (upload ảnh/file)
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-API: `http://localhost:8080`
-
-**Frontend**
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-Giao diện: `http://localhost:3000` (proxy sẵn sang backend `8080`).
+**Quick Demo:**  
+Log in with `1481312` / `123456` → open a course section → enter grades (if the grading period is open) → view teaching schedule → respond to consultation requests.
 
 ---
 
-## Cấu trúc thư mục
+### 3. Administrator
 
-```
-QuanLyHoSoSinhVien/
-├── backend/          # Express API, models, upload S3
-│   ├── CSDL.sql      # Schema + dữ liệu mẫu
-│   └── server/
-└── frontend/         # React
-    └── src/pages/    # Admin, GiangVien, SinhVien
-```
+The Administrator operates and manages the **entire system**, including system configuration, users, academic data, financial information, and administrative processes.
 
+**User & Profile Management**
+
+- Account management: lock / unlock accounts and manage permissions.
+- Student and lecturer management: create, update, delete, import from Excel, and upload student photos to S3.
+
+**University Management**
+
+- Departments, majors, and administrative classes.
+- Courses, course sections, and lecturer assignments.
+- Class schedules / sessions and holidays.
+
+**Academic & Registration Management**
+
+- Course registration periods (open / close).
+- Edit finalized grades when necessary.
+- Import and manage training results.
+- Import and manage English certificates.
+- Scholarship evaluation and graduation evaluation.
+
+**Communication & Finance**
+
+- News and announcements (images, videos, and files).
+- Tuition fees and outstanding balances.
+- Monitor consultation requests across the system.
+
+> **Security Note:** Administrator credentials are intentionally excluded from this README. Administrative access is restricted to authorized personnel.
+
+---
+
+## Permission Summary
+
+| Feature | Student | Lecturer | Administrator |
+|---------|:-------:|:--------:|:-------------:|
+| View own profile / grades / schedule | Yes | Yes (assigned classes) | All users |
+| Course registration | Yes | — | Configure periods |
+| Enter grades | — | Yes (during open period) | Edit saved grades |
+| Manage departments, majors, classes, courses | — | — | Yes |
+| Tuition, scholarships, graduation | View own information | — | Manage / evaluate |
+| Academic consultation | Send | Respond | Monitor |
+| News | View | View | Create / edit / delete |
+
+---
+
+## Running Locally
+
+Requirements:
+
+- **Node.js**
+- **MySQL 8**
 
